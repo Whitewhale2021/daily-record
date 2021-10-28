@@ -1,0 +1,148 @@
+#include<stdio.h>
+#include<windows.h>
+#include<stdlib.h> 
+int main()
+{
+	for(;;) 
+ {
+	printf("\n\n\n\n************************请问你想进入哪一个程序？************************\n----------------------    a. 输出任意乘法表       ----------------------\n----------------------    b. 输出分段函数的值     ----------------------\n----------------------    c. 进制转换             ----------------------\n\n*在任意情况下输入d可终止进程，退出所有程序*\n*在子程序内输入a，b，c可直接跳转至指定程序，输入题目规定外的其他字符数字则返回主页面*\n\n请输入："); 
+  char type;
+	   scanf("%c",&type);
+	   system("cls"); 
+   	switch (type) 
+   	{
+	   case 'a':  
+				{
+				  int i;
+				  printf("输出任意乘法表，请输入输入1-9之间的任意一个数 : ");
+				  scanf("%d",&i); 
+				  if(i>=1&&i<=9){
+					int a,b,c;
+					for(a=1;a<=i;a++){
+						for(b=1;b<=a;b++){
+							c=a*b;
+							printf("%d*%d=%-4d",a,b,c);
+						}
+						printf("\n\n");
+					}
+				  }	
+				    else{
+						printf("你输的啥呀，错啦！\n");
+					}
+				}
+                 system("pause");
+				 system("cls"); 
+				 break;
+	   case 'b':
+	   	         {
+					int t,x;
+					printf("输入x求分段函数的函数值\n   y = 0       , x<0\n     = x       , x>=0且x<10\n     = x mod 3 , x>=10\n请输入任意数，或按任意字母键退出：\n"); 
+						again: 
+						
+						t=scanf("%d",&x);
+						while(t!=0){
+						if(x<0){
+							printf("函数的结果是：0\n");
+						}else if(x>=0&&x<10){
+							printf("函数的结果是：%d\n",x);
+						}else{
+							printf("函数的结果是：%d\n",x%3);	
+						}
+						printf("请输入任意数继续；或输入任意字母键退出：\n"); 
+						goto again;
+						       
+							       } 
+							  		   	
+					}
+					break;
+	   case 'c':
+		   	    {
+				       printf("十进制转化为8位二进制请按1；8位二进制转化为十进制请按2：\n");
+				       	int x,a,b,c,d,i;
+				   	    int type;
+				   	    	a=b=c=d=i=0;
+				       scanf("%d",&type);
+				   		switch (type) 
+				    {
+				      case 1:
+				   	printf("请输入0-255范围内的十进制数，我会将其转变为8位二进制数后输出:\n") ;
+				   	scanf("%d",&x) ;
+				   	if(x>=0&&x<=255){
+				            if(x==0)
+				   		 {
+				   		   d=x;	
+				   		 } 
+				   		 else{
+				   		// 	while(x!=0)
+				   		// {
+				   		// 	a=x%2;
+				   		// 	x/=2;
+				   	    //  b=a+b*10;
+				   		// }
+				   		//    while(b!=0)
+				   		// {
+				   		// 	c=b%10;
+				   		// 	b/=10;
+				   		// 	d=c+d*10;
+				   		// }
+				   		 int str[8];
+				   		 for(i=0;i<=7;i++)
+				   		 {
+							a=x%2;
+							x/=2;
+							str[i] = a ;
+							
+					    	}
+					    	
+			            printf("%d%d%d%d%d%d%d%d\n",str[7],str[6],str[5],str[4],str[3],str[2],str[1],str[0]);
+							
+							      }
+				   		 //printf("%08d\n",d);
+				   		 system("pause");
+				   			}
+				   	else{
+				   		printf("错误值，输入的应在0-255范围内\n"); 
+				   		system("pause");
+				   	}
+				        
+				      break;
+				      
+				      case 2:
+				       printf("请输入十进制下在0-255范围内的8位二进制数，我会将其转变十进制数后输出:\n") ;
+				   	  int m,n,i,t;
+					   	int str[8] ;
+						   scanf("%d",&m);
+						   for(i=0;i<=7;i++)
+					   	{
+					   		n=m%10;
+					   		str[i]=n;
+					   		m/=10;
+					   	}
+					   	t=str[0]*1+str[1]*2+str[2]*4+str[3]*8+str[4]*16+str[5]*32+str[6]*64+str[7]*128;
+					   	printf("%d\n",t);
+						               
+						               
+				    system("pause");   
+				      
+					  break;
+				      
+				      default:
+				       printf("输入错误，别再乱输啦!\n");
+				       system("pause");
+				      break;	 
+				      	
+				    }
+				}	
+				    break;
+	   case 'd':
+	   	          goto out;
+	   
+	   default:
+	   		printf("\n\n请重新输入a,b,c,d其中之一"); 
+				 break;
+		   	    }
+   	}				 
+						   			 	
+       out:
+       return 0;
+ }
