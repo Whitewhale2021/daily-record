@@ -1,0 +1,108 @@
+#include<stdio.h>
+#include<string.h>
+#include<windows.h>
+//#include<stdlib.h>
+int main()
+{
+	char  str0[1000]="0";//存放原式 
+	char  str1[1000]="0";//提取符号 
+    char  str2[1000]="0";//提取字符型数字 
+    int   str3[1000]={0};//存放转化后数字和运算结果 
+    printf("请输入算式：\n"); 
+	int u=0,l=0,flag=0,change=0,move=0;
+	/*	while(getchar()!='\n')
+
+	  for(;;)
+	      {
+		if(getchar()=='+'||getchar()=='-'||getchar()=='*'||getchar()=='/')
+			{
+				str1[u]=getchar();
+				u++;
+			}else{
+				str2[l]=getchar();
+				l++;
+			}
+	      }                                          //取值 */
+	      
+	scanf("%s",str0);
+	for(unsigned int i=0;i<strlen(str0);i++)
+	{
+		if(str0[i]=='+'||str0[i]=='-'||str0[i]=='*'||str0[i]=='/')
+					{
+						str1[u]=str0[i];
+						u++;
+					}else{
+						str2[l]=str0[i];
+						l++;
+					}                                //取值
+	}  
+	      
+	for(unsigned int i=0;i<strlen(str2);i++)
+	{
+		str3[i]=str2[i]-'0'; 
+	}  
+	                                                 //转换 
+  {
+		unsigned int i=0;
+		unsigned int a=0;
+		unsigned int b=strlen(str1);
+	for(i=0;i<b;i++)
+	{
+		if(str1[change]=='*')
+		{
+			str3[change+1]*=str3[change];
+		}
+		else if(str1[change]=='/')
+		{
+			str3[change+1]=str3[change]/str3[change+1];
+		}
+	 if((str1[change]=='*')||(str1[change]=='/'))
+	  {
+		flag=1;
+		for(unsigned int t=change;t<b;t++)
+						{
+							str1[t]=str1[t+1];
+						}
+		for(unsigned int t=change;t<strlen(str2);t++)
+						{
+							str3[t]=str3[t+1];
+						}				            						
+	  }
+	  	     	if(flag!=1)
+	  					{
+	  						change++;
+	  					}
+	  
+	  	flag=0; 
+	}
+	unsigned int c=strlen(str1);
+	for(a=0;a<c;a++)
+	{  
+		if(str1[move]=='+')
+		{
+			str3[move+1]+=str3[move];
+		}
+		else if(str1[move]=='-')
+		{
+			str3[move+1]=str3[move]-str3[move+1];
+	    }
+	if(str1[move]=='+'||str1[move]=='-')
+	 {
+	    for(unsigned int t=move;t<c;t++)
+						{
+							str1[t]=str1[t+1];
+						}
+		for(unsigned int t=move;t<strlen(str2);t++)
+						{
+							str3[t]=str3[t+1];
+						}				
+                
+	
+	 }
+	}
+  }
+  
+   printf("计算值=%d\n\n",str3[0]);
+   system("pause");
+}
+ 
