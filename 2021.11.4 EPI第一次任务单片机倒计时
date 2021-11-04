@@ -1,0 +1,184 @@
+#include "reg52.h"
+#define SMG_PORT	P0
+
+typedef unsigned char u8;
+typedef unsigned int u16;
+
+sbit LSA=P2^2;
+sbit LSB=P2^3;
+sbit LSC=P2^4;
+
+u16 t=0;
+u16 p=0;	
+	u8 a=0;
+	u8 b=1;
+	u8 c=0;
+	u8 d=0;
+	u8 e=0;
+	u8 u=0;
+	u8 flag=16;
+
+u16 tt = 600;      //60s
+
+u8 gsmg_code[19]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,
+				          0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71,
+                  0x06,0x160,0x00};
+
+//void num_10(u8 n)
+//{
+//	 n--;
+//	 if(n==0)
+//		  n=9;
+//}
+
+//void num_6(u8 n)
+//{
+//	 n--;
+//	 if(n==0)
+//		  n=5;
+//}
+									
+									
+void time0_init(void)
+{
+  TMOD|=0X01;//低四位控制定时器0模式，gate 、C\T、m1、m0工作方式01
+//	TH0=0XFC;//1ms
+//	TL0=0X66;
+	ET0=1;//定时器0中断允许
+	EA=1;
+	TR0=1;//定时器0打开
+}
+
+void time0() interrupt 1
+{
+
+	 TH0=0XFC;
+	 TL0=0X66;
+	 t++;
+	 p++;
+	
+  if((p==1000)&&(u==0))
+	{
+	  u=1;
+		flag=18;
+		p=0;
+	}		
+	  if((p==1000)&&(u==1))
+	{
+	  u=0;
+		flag=16;
+		p=0;
+	}		
+	
+		if(t == 100)
+	{
+		tt--;
+		t=0;
+	}
+	
+	e = tt%10;
+	d = (tt/10)%10;
+	if(tt!=600)
+	c = tt/100;
+	
+	if(tt!=600)
+	{
+		b = 0;
+	}
+	
+	if(tt==0)
+	{
+	  TR0=0;
+	}
+	
+//	if(t==100)
+//	{		
+//		if(e==0)
+//			e=10;
+//		e--;
+//		
+//		t=0;
+//	}
+//	
+//	
+//	if(t==100)
+//	{
+//		if(((d>0)&&(e==0))||((d=0)&&(e>0)))
+//		{
+//		   num_10(e);  
+//				if(e==9)
+//				{
+//				 if(((c>0)&&(d==0))||((c=0)&&(d>0)))
+//				 { 
+//					 num_10(d);
+//					
+//						if(d==9)
+//							{
+//								if(((b>0)&&(c==0))||((b=0)&&(c>0)))
+//								{
+//										num_6(c);
+//										if(c==5)
+//									{
+//										if(b>0)
+//										{
+//											b--;
+//										}
+//									}
+//								}
+//							}
+//						}
+//				}
+//	  }
+//		t=0;
+//  }
+}
+
+void delay_10us(u16 ten_us)
+{
+   while(ten_us--);
+}
+
+
+void digital_light_1_8(u8 i,u8 j)
+ {
+		 switch(i-1){
+			case 0:LSC=1;LSB=1;LSA=1;break;
+			case 1:LSC=1;LSB=1;LSA=0;break;
+			case 2:LSC=1;LSB=0;LSA=1;break;
+			case 3:LSC=1;LSB=0;LSA=0;break;
+			case 4:LSC=0;LSB=1;LSA=1;break;
+			case 5:LSC=0;LSB=1;LSA=0;break;
+			case 6:LSC=0;LSB=0;LSA=1;break;
+			case 7:LSC=0;LSB=0;LSA=0;break;
+		         }  
+	  SMG_PORT = gsmg_code[j];
+		delay_10us(100);
+		SMG_PORT = 0x00;
+ }
+ 
+void main()
+{
+    time0_init();
+	while(1)
+ {
+	{
+
+//  LSC=1;LSB=0;LSA=1;
+//	P0=0X30;
+//	delay_10us(100);
+//	P0=0X00;
+	LSC=0;LSB=0;LSA=1;
+	P0=0X80;
+	delay_10us(100);
+	P0=0X00;
+		       digital_light_1_8(1,a);
+			     digital_light_1_8(2,b);
+		       digital_light_1_8(3,flag);
+			     digital_light_1_8(5,c);
+			     digital_light_1_8(6,d);
+           digital_light_1_8(8,e);
+		 
+  }
+
+ }
+}
