@@ -1,0 +1,28 @@
+#include<stdio.h>
+int main()
+{
+	int num[10]={0};
+	int i,j,t=0;
+	i=j=t;
+	printf("请输入10个数\n");
+	for( i=0;i<10;i++)
+	{
+		scanf("%d",&num[i]);
+	}
+	for(i=0;i<9;i++)
+	{
+		for(j=0;j<9-i;j++)
+		{
+			if(num[j]>num[j+1])
+			{
+				t=num[j];
+				num[j]=num[j+1];
+				num[j+1]=t;
+			}
+		}
+	}
+  for(i=0;i<10;i++)
+	printf("%d	",num[i]);
+	//排好一个之后，它之后的都比它大 
+
+} 
