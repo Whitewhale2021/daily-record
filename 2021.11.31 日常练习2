@@ -1,0 +1,8 @@
+#include<stdio.h>
+int main(){
+	
+int x=012;//10 
+
+printf("%d",x);  
+}
+//0开头对应的是8进制，0x对应十六进制 
