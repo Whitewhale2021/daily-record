@@ -1,0 +1,13 @@
+#include<stdio.h>
+
+int main()
+{
+    
+
+    char word[3][10]={ "China", "Denmark", "Spain"};
+    printf("%s\n", & word [1][0]) ;//Denmark
+    printf("%s\n", & word [1][3]) ;//mark
+    printf("%c\n",  word [1][0]) ;//D
+    return 0;
+}
+//如果输出的是字符串，给到首位置 地址 ，一直到结束符号都会输出
